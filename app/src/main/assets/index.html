@@ -35,6 +35,12 @@ footer{font-size:13px;color:#7d8097;margin-top:30px;direction:ltr}
 <div class="subtitle">إدارة متجرك ومشاهدة الشروحات بسهولة</div>
 <button class="primary" onclick="showPage('admin')">إدارة المتجر</button>
 <button class="green" onclick="showPage('videos')">فيديوهات للشرح</button>
+</section>
+<section id="admin" class="hidden">
+<button class="back" onclick="showPage('home')">← الرجوع إلى الصفحة الرئيسية</button>
+<h1>StoreMaster ADM</h1><p class="subtitle">إدارة المتجر وإعداد روابطه</p>
+<button class="primary" onclick="openLink('adminUrl')">دخول إلى ADM</button>
+<button class="green" onclick="openLink('storeUrl')">الدخول إلى المتجر</button>
 <div class="panel">
 <h2>كلمة مرور لوحة التحكم</h2>
 <div class="row"><button aria-label="إظهار كلمة المرور" onclick="togglePassword()">◉</button><input id="password" type="password" value="" placeholder="أدخل كلمة المرور"></div>
@@ -51,15 +57,9 @@ footer{font-size:13px;color:#7d8097;margin-top:30px;direction:ltr}
 <button class="gray" onclick="saveSettings()">حفظ الإعدادات</button>
 <p class="hint">بعد قفل الرابط أو كلمة المرور، لا يمكن تعديلها حتى يتم إلغاء القفل.</p>
 </section>
-<section id="admin" class="hidden">
-<button class="back" onclick="showPage('home')">← العودة</button>
-<h1>StoreMaster ADM</h1><p class="subtitle">إدارة المتجر</p>
-<button class="primary" onclick="openLink('adminUrl')">دخول إلى ADM</button>
-<button class="green" onclick="openLink('storeUrl')">الدخول إلى المتجر</button>
-</section>
 <section id="videos" class="hidden">
 <button class="back" onclick="showPage('home')">← العودة إلى الرئيسية</button>
-<h1>فيديوهات الشرح</h1>
+<h1>فيديوهات الشرح</h1><p class="subtitle" style="margin-bottom:24px">اختر عنوان الشرح لفتح الفيديو الأصلي دون تكبيره داخل التطبيق</p>
 <div id="videoList"></div>
 </section>
 <footer style="background:#202239;border-radius:16px;padding:16px 10px;margin-top:30px;line-height:1.8;color:#e0e4f7">
@@ -85,6 +85,7 @@ function showPage(p){['home','admin','videos'].forEach(id=>document.getElementBy
 window.addEventListener('load',()=>setTimeout(()=>{const splash=document.getElementById('splash');if(splash)splash.style.display='none'},1800));
 function openLink(id){let url=document.getElementById(id).value.trim();if(url)window.open(url,'_blank')}
 function togglePassword(){let p=document.getElementById('password');p.type=p.type==='password'?'text':'password'}
-function saveSettings(){[['password','lockpass'],['adminUrl','lockadmin'],['storeUrl','lockstore']].forEach(([field,lock])=>{let el=document.getElementById(field);el.disabled=document.getElementById(lock).checked});alert('تم تطبيق الإعدادات على هذه الجلسة.')}
+function saveSettings(){[['password','lockpass'],['adminUrl','lockadmin'],['storeUrl','lockstore']].forEach(([field,lock])=>{let el=document.getElementById(field);el.disabled=document.getElementById(lock).checked});try{['password','adminUrl','storeUrl','lockpass','lockadmin','lockstore'].forEach(id=>{let el=document.getElementById(id);localStorage.setItem('sm_'+id,el.type==='checkbox'?String(el.checked):el.value)});}catch(e){}alert('تم حفظ الإعدادات على هذا الجهاز.')}
 [['password','lockpass'],['adminUrl','lockadmin'],['storeUrl','lockstore']].forEach(([field,lock])=>{document.getElementById(lock).addEventListener('change',e=>document.getElementById(field).disabled=e.target.checked);document.getElementById(field).disabled=true});
+try{['password','adminUrl','storeUrl','lockpass','lockadmin','lockstore'].forEach(id=>{let v=localStorage.getItem('sm_'+id);if(v!==null){let el=document.getElementById(id);if(el.type==='checkbox')el.checked=v==='true';else el.value=v;}});[['password','lockpass'],['adminUrl','lockadmin'],['storeUrl','lockstore']].forEach(([field,lock])=>document.getElementById(field).disabled=document.getElementById(lock).checked);}catch(e){}
 </script></body></html>
