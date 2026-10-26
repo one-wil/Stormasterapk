@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#101020">
+<title>StoreMaster ADM</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101020;color:#fff;font-family:Arial,"Noto Sans Arabic",sans-serif;padding:22px 18px 30px;text-align:center}
+h1{font-size:clamp(27px,7vw,38px);margin:12px 0 44px;font-weight:800;direction:ltr}
+.subtitle{font-size:19px;color:#c5c5d2;margin-bottom:42px}
+button{border:0;width:100%;min-height:62px;border-radius:15px;margin:0 0 16px;font-size:21px;font-weight:700;color:#fff;cursor:pointer}
+.primary{background:#4260ed}.green{background:#16a574}.gray{background:#505873}
+.panel{background:#202239;border-radius:20px;padding:20px 18px;margin:18px 0 22px;text-align:right}
+.panel h2{font-size:23px;margin:4px 0 20px}
+input{width:100%;height:58px;border:0;border-radius:12px;padding:0 17px;font-size:18px;background:#fff;color:#20202b;direction:ltr}
+.row{display:flex;align-items:center;gap:12px;margin:12px 0}.row button{width:70px;min-width:70px;margin:0;background:#2c3152;font-size:25px}.row input{flex:1;min-width:0}
+.checkrow{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:16px}.checkrow input{width:22px;height:22px}
+.hint{color:#bfc0cf;line-height:1.7;font-size:15px;margin:18px 0 24px}
+.video-btn{background:#252943;text-align:right;padding:0 18px;display:flex;align-items:center;justify-content:space-between;font-size:18px}
+.video-btn span{background:#3d58df;border-radius:9px;padding:8px 10px;font-size:14px}
+.hidden{display:none}.back{background:#343852;margin-bottom:22px}
+footer{font-size:13px;color:#7d8097;margin-top:30px;direction:ltr}
+</style></head>
+<body>
+<section id="splash" style="position:fixed;inset:0;z-index:10;background:radial-gradient(circle at 50% 35%,#123a7a 0%,#101020 55%,#070814 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px">
+<div id="brandLogo" style="width:142px;height:142px;border-radius:34px;background:linear-gradient(145deg,#12d9f4,#1456ed 58%,#ff9c22 59%,#f47712);display:flex;align-items:center;justify-content:center;box-shadow:0 0 36px #087bff88;position:relative;margin-bottom:24px">
+<div style="position:absolute;top:-14px;width:48px;height:29px;border:8px solid #ffb33d;border-bottom:0;border-radius:24px 24px 0 0"></div>
+<div style="font-size:88px;font-weight:900;color:white;text-shadow:0 4px 4px #00205b">S</div></div>
+<div style="font-size:36px;font-weight:900;direction:ltr">Store<span style="color:#11c9f4">Master</span></div>
+<p style="font-size:18px;color:#dce8ff;margin:12px 0 0">أنشئ متجرك الإلكتروني بسهولة</p>
+<div style="margin-top:50px;color:#98b9ff;font-size:14px">جاري التحميل...</div>
+</section>
+<section id="home">
+<h1>StoreMaster ADM</h1>
+<div class="subtitle">إدارة متجرك ومشاهدة الشروحات بسهولة</div>
+<button class="primary" onclick="showPage('admin')">إدارة المتجر</button>
+<button class="green" onclick="showPage('videos')">فيديوهات للشرح</button>
+<div class="panel">
+<h2>كلمة مرور لوحة التحكم</h2>
+<div class="row"><button aria-label="إظهار كلمة المرور" onclick="togglePassword()">◉</button><input id="password" type="password" value="" placeholder="أدخل كلمة المرور"></div>
+<label class="checkrow"><input type="checkbox" id="lockpass" checked> قفل كلمة المرور (إخفاؤها)</label>
+</div>
+<div class="panel">
+<h2>رابط لوحة الإدارة ADM</h2>
+<input id="adminUrl" value="https://t-shop.pages.dev/adm-2-1">
+<label class="checkrow"><input type="checkbox" id="lockadmin" checked> قفل الرابط</label>
+<h2 style="margin-top:26px">رابط المتجر</h2>
+<input id="storeUrl" value="https://t-shop.pages.dev">
+<label class="checkrow"><input type="checkbox" id="lockstore" checked> قفل الرابط</label>
+</div>
+<button class="gray" onclick="saveSettings()">حفظ الإعدادات</button>
+<p class="hint">بعد قفل الرابط أو كلمة المرور، لا يمكن تعديلها حتى يتم إلغاء القفل.</p>
+</section>
+<section id="admin" class="hidden">
+<button class="back" onclick="showPage('home')">← العودة</button>
+<h1>StoreMaster ADM</h1><p class="subtitle">إدارة المتجر</p>
+<button class="primary" onclick="openLink('adminUrl')">دخول إلى ADM</button>
+<button class="green" onclick="openLink('storeUrl')">الدخول إلى المتجر</button>
+</section>
+<section id="videos" class="hidden">
+<button class="back" onclick="showPage('home')">← العودة إلى الرئيسية</button>
+<h1>فيديوهات الشرح</h1>
+<div id="videoList"></div>
+</section>
+<footer style="background:#202239;border-radius:16px;padding:16px 10px;margin-top:30px;line-height:1.8;color:#e0e4f7">
+<div style="font-size:16px;font-weight:bold;color:#fff">Contacter le support</div>
+<div>24h/24 et 7j/7</div>
+<div style="direction:ltr;font-size:15px;color:#dce7ff">0551102155 / 0671466489</div>
+<div style="font-size:16px;font-weight:bold;color:#fff">A.BENAKRAB</div>
+</footer>
+<script>
+const videos=[
+['تبويب الصفحة الرئيسية','https://youtu.be/7A6TsEuDxNw?si=NPVdWh38Bb44KdIy'],
+['تبويب المنتجات','https://youtu.be/9xufS_exl5c?si=E3OjvaZvZbikOWDw'],
+['تبويب التوصيل','https://youtu.be/Mnb-oyEn8k8?si=VhYxDp5omqeAZa5V'],
+['تبويب الإعدادات','https://youtu.be/XzO0fd-Lg6g?si=fEygORCpPSu2KTWi'],
+['تبويب قوالب المتجر','https://youtu.be/f1MZAGtuhc4?si=lqXuyWrGgEKTrWuW'],
+['تبويب الطلبات','https://youtu.be/I4b9dEN2wJQ?si=2O2QcKaTuv-zAQXd'],
+['تبويب أرشيف الطلبات','https://youtu.be/JeM1zpEwt_M?si=rUxAk5A2TPX_FITZ'],
+['تبويب الأدوات','https://youtu.be/d8UmnqAEiVw?si=nC65y0S2ERVAHrYb'],
+['تبويب اشتراكي','https://youtu.be/MrIYHKVQkS4?si=lH9M-fgE-1tqSg_U']
+];
+document.getElementById('videoList').innerHTML=videos.map(([name,url],i)=>`<button class="video-btn" onclick="window.open('${url}','_blank')">${name}<span>▶ مشاهدة</span></button>`).join('');
+function showPage(p){['home','admin','videos'].forEach(id=>document.getElementById(id).classList.toggle('hidden',id!==p));window.scrollTo(0,0)}
+window.addEventListener('load',()=>setTimeout(()=>{const splash=document.getElementById('splash');if(splash)splash.style.display='none'},1800));
+function openLink(id){let url=document.getElementById(id).value.trim();if(url)window.open(url,'_blank')}
+function togglePassword(){let p=document.getElementById('password');p.type=p.type==='password'?'text':'password'}
+function saveSettings(){[['password','lockpass'],['adminUrl','lockadmin'],['storeUrl','lockstore']].forEach(([field,lock])=>{let el=document.getElementById(field);el.disabled=document.getElementById(lock).checked});alert('تم تطبيق الإعدادات على هذه الجلسة.')}
+[['password','lockpass'],['adminUrl','lockadmin'],['storeUrl','lockstore']].forEach(([field,lock])=>{document.getElementById(lock).addEventListener('change',e=>document.getElementById(field).disabled=e.target.checked);document.getElementById(field).disabled=true});
+</script></body></html>
